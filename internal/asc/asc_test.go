@@ -311,3 +311,33 @@ func TestHTTPErrorIsReadable(t *testing.T) {
 		t.Fatal("409 is not 404")
 	}
 }
+
+func TestUnlockValueCountsOnlyApprovedUnlocks(t *testing.T) {
+	iaps := []IAP{
+		{ProductID: "a", Type: "NON_CONSUMABLE", State: "APPROVED", PriceUSD: 0.99, Priced: true},
+		{ProductID: "b", Type: "NON_CONSUMABLE", State: "MISSING_METADATA", PriceUSD: 0.99, Priced: true},
+		{ProductID: "c", Type: "CONSUMABLE", State: "APPROVED", PriceUSD: 0.99, Priced: true},
+		{ProductID: "com.ol1n.pass.lifetime.x", Type: "NON_CONSUMABLE", State: "APPROVED", PriceUSD: 49, Priced: true},
+	}
+	if got := UnlockValueUSD(iaps); got != 0.99 {
+		t.Fatalf("UnlockValueUSD = %v, want 0.99", got)
+	}
+}
+
+func TestCurrentPriceSkipsEndedEntries(t *testing.T) {
+	doc := &Document{
+		Data: json.RawMessage(`[
+			{"type":"inAppPurchasePrices","id":"old","attributes":{"endDate":"2026-01-01"},
+			 "relationships":{"inAppPurchasePricePoint":{"data":{"id":"p1"}}}},
+			{"type":"inAppPurchasePrices","id":"now","attributes":{},
+			 "relationships":{"inAppPurchasePricePoint":{"data":{"id":"p2"}}}}]`),
+		Included: []Resource{
+			{ID: "p1", Attributes: map[string]any{"customerPrice": "1.99"}},
+			{ID: "p2", Attributes: map[string]any{"customerPrice": "0.99"}},
+		},
+	}
+	p, ok, err := currentPrice(doc)
+	if err != nil || !ok || p != 0.99 {
+		t.Fatalf("currentPrice = %v %v %v", p, ok, err)
+	}
+}

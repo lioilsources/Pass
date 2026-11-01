@@ -57,7 +57,7 @@ jako fallback.
     "appstore_id": "6774868017" | null,
     "appstore_url": "https://apps.apple.com/app/id…" | null,
     "playstore_url": "https://play.google.com/store/apps/details?id=…" | null,
-    "unlock_value_usd": 10.0 | null,  // součet non-consumable unlocků; null = ještě nevyplněno
+    "unlock_value_usd": 13.86 | null, // součet schválených non-consumable IAP v USD z `passctl asc iaps`; null = žádné nebo neznámé
     "unlocks": ["14 ship skins"],
     "kids": false,                    // Kids Category / Designed for Families → bez loginu bez brány
     "pass_since": "2.6.0" | null,     // verze appky s ol1n_pass; null = Pass tam ještě není
@@ -100,6 +100,7 @@ RC webhook typy, které se hlásí: `INITIAL_PURCHASE`, `NON_RENEWING_PURCHASE`,
 ```
 passctl catalog check                       # schéma, unikátní slugy, součet hodnoty
 passctl catalog value                       # vytiskne total_unlock_value_usd
+passctl asc iaps --app <slug>|--all         # jen čtení: existující IAP, stav, cena v USD a hodnota unlocků
 passctl asc products plan  --app <slug>     # co by se vytvořilo (dry-run), bez sítě
 passctl asc products apply --app <slug>     # ASC API: IAP lifetime + yearly (group, localization, price), idempotentní
 passctl play products plan|apply --app <slug>

@@ -30,6 +30,7 @@ const usage = `passctl — Ol1n Pass operator CLI
   passctl catalog value                      total unlock value in USD
   passctl asc  products plan  --app <slug>   App Store Connect: what apply would create (no network)
   passctl asc  products apply --app <slug>   App Store Connect: create missing IAP + subscription
+  passctl asc  iaps --app <slug>             App Store Connect: list existing IAPs and their US prices (read-only)
   passctl play products plan  --app <slug>   Google Play: what apply would create (no network)
   passctl play products apply --app <slug>   Google Play: create missing one-time product + subscription
   passctl rc   check                         RevenueCat: products ↔ entitlement all_apps ↔ offering pass
@@ -137,6 +138,33 @@ func run(args []string) error {
 		return forApps(cat, c, func(a catalog.App) error {
 			fmt.Printf("== %s (%s)\n", a.Name, a.IOSBundleID)
 			return asc.Provision(ctx, asc.Live{C: cl}, a, cat.Pass, os.Stdout)
+		})
+
+	case "asc iaps":
+		cl, err := asc.NewFromEnv()
+		if err != nil {
+			return err
+		}
+		live := asc.Live{C: cl}
+		return forApps(cat, c, func(a catalog.App) error {
+			id, err := live.FindApp(ctx, a.IOSBundleID)
+			if err != nil {
+				fmt.Printf("== %s: %v\n", a.Slug, err)
+				return nil
+			}
+			iaps, err := live.ListIAPs(ctx, id)
+			if err != nil {
+				return err
+			}
+			fmt.Printf("== %s: unlock value %.2f USD from %d IAPs\n", a.Slug, asc.UnlockValueUSD(iaps), len(iaps))
+			for _, i := range iaps {
+				price := "no USD price"
+				if i.Priced {
+					price = fmt.Sprintf("%.2f USD", i.PriceUSD)
+				}
+				fmt.Printf("  %-44s %-16s %-24s %s  %s\n", i.ProductID, i.Type, i.State, price, i.Name)
+			}
+			return nil
 		})
 
 	case "play products plan":

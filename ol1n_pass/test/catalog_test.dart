@@ -17,10 +17,10 @@ void main() {
       expect(catalog.apps.map((a) => a.slug), contains('kirian'));
 
       // Nothing is wired in yet, so "value today" is 0 and the listed value
-      // is Kiran + Lexify (the two apps with a known unlock value).
+      // is every app with approved one-time IAPs (`passctl asc iaps`).
       expect(catalog.appsWithPass, isEmpty);
       expect(catalog.totalUnlockValueUsd, 0);
-      expect(catalog.totalListedValueUsd, 30.0);
+      expect(catalog.totalListedValueUsd, closeTo(26.73, 0.001));
       expect(catalog.comingSoon.length, catalog.apps.length);
     });
 
