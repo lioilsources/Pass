@@ -1,0 +1,19 @@
+# pass.ol1n.com is exposed through the Cloudflare Tunnel → Caddy.
+# Public: health, catalog, the v1 API the apps call and the RevenueCat webhook.
+pass.ol1n.com {
+	@public path /healthz /pass/* /v1/* /webhooks/*
+	handle @public {
+		reverse_proxy pass-api:8096
+	}
+	handle {
+		respond 404
+	}
+	log {
+		# app_user_id travels in the entitlements query; keep it out of access logs.
+		format filter {
+			request>uri query {
+				replace user REDACTED
+			}
+		}
+	}
+}

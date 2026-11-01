@@ -1,0 +1,34 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Only apps signed with the same key (all Ol1n apps) may read the id. -->
+    <permission
+        android:name="com.ol1n.pass.READ_IDENTITY"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.ol1n.pass.READ_IDENTITY" />
+
+    <!-- Android 11+ package visibility: lets us find sibling Ol1n apps. -->
+    <queries>
+        <intent>
+            <action android:name="com.ol1n.pass.IDENTITY" />
+        </intent>
+    </queries>
+
+    <application>
+        <!-- content://<applicationId>.ol1npass/identity → pass_user_id -->
+        <provider
+            android:name="com.ol1n.pass.PassIdentityProvider"
+            android:authorities="${applicationId}.ol1npass"
+            android:exported="true"
+            android:permission="com.ol1n.pass.READ_IDENTITY" />
+
+        <!-- No-op marker so sibling apps can discover this one. -->
+        <service
+            android:name="com.ol1n.pass.PassIdentityMarkerService"
+            android:exported="true"
+            android:permission="com.ol1n.pass.READ_IDENTITY">
+            <intent-filter>
+                <action android:name="com.ol1n.pass.IDENTITY" />
+            </intent-filter>
+        </service>
+    </application>
+</manifest>

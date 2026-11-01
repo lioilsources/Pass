@@ -1,0 +1,31 @@
+# Standalone compose for JODA, deployed to ~/deploy/pass-api (see docs/RUNBOOK.md):
+#   ~/deploy/pass-api/docker-compose.yml   (this file)
+#   ~/deploy/pass-api/.env                 (chmod 600, from .env.example)
+#   ~/deploy/pass-api/data/pass.db         (SQLite, bind mount)
+# pass-api joins the external "web" network shared with Caddy; nothing is published on the host.
+services:
+  pass-api:
+    image: ghcr.io/lioilsources/pass-api:latest
+    # or: build: { context: ../../Pass, dockerfile: deploy/Dockerfile }
+    container_name: pass-api
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      PASS_ADDR: ":8096"
+      PASS_DB_PATH: /data/pass.db
+    volumes:
+      - ./data:/data
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/pass-api", "healthcheck"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks: [web]
+    mem_limit: 64m
+    labels:
+      ol1n.app: pass
+
+networks:
+  web:
+    external: true

@@ -1,0 +1,23 @@
+# Go
+bin/
+*.db
+*.db-wal
+*.db-shm
+
+# Secrets
+.env
+deploy/pass-api/.env
+deploy/pass-api/data/
+
+# Flutter package
+ol1n_pass/.dart_tool/
+ol1n_pass/build/
+ol1n_pass/pubspec.lock
+ol1n_pass/.flutter-plugins-dependencies
+ol1n_pass/example/build/
+ol1n_pass/example/.dart_tool/
+
+# OS / editors
+.DS_Store
+.idea/
+*.iml

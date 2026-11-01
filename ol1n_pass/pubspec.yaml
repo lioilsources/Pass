@@ -1,0 +1,35 @@
+name: ol1n_pass
+description: >-
+  Ol1n Pass: one purchase that unlocks every Ol1n app. Shared entitlement
+  (RevenueCat), cross-app identity without login, paywall widgets.
+version: 0.1.0
+homepage: https://github.com/lioilsources/Pass
+repository: https://github.com/lioilsources/Pass
+
+environment:
+  sdk: ^3.8.0
+  flutter: ">=3.32.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  purchases_flutter: ^11.0.0
+  flutter_secure_storage: ^11.2.0
+  google_sign_in: ^7.2.0
+  http: ^1.6.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.ol1n.pass
+        pluginClass: Ol1nPassPlugin
+  assets:
+    - assets/apps.json

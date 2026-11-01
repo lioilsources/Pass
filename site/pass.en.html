@@ -1,0 +1,160 @@
+<!-- title: Ol1n Pass — one purchase, every app | olin.now -->
+<!-- description: Ol1n Pass unlocks every premium feature in every Ol1n app for $49, once — including apps that have not shipped yet. The value grows, the price does not. -->
+<div class="pass">
+
+<nav class="pass-top" aria-label="Navigation">
+  <a class="home" href="index.html">olin.now</a>
+  <div class="pass-top-right">__LANGS__</div>
+</nav>
+
+<header class="pass-hero">
+  <p class="pass-kicker">Ol1n Pass</p>
+  <h1>One purchase. Every app. Forever.</h1>
+  <p class="pass-lead">Ol1n Pass unlocks every premium feature in all of my apps on the App Store and Google Play — and in the ones that have not shipped yet. It costs $49, once. Every new app adds more for the same price.</p>
+
+  <div class="pass-value" aria-live="polite">
+    <div><span class="lbl">Value of every unlock today</span><span class="num" data-total>—</span></div>
+    <span class="arrow" aria-hidden="true">→</span>
+    <div><span class="lbl">Ol1n Pass</span><span class="num pass" data-price>$49</span></div>
+    <p class="note">The sum of all one-time unlocks in the current apps. It is computed from the list below and keeps growing; the price of the Pass stays.</p>
+  </div>
+
+  <div class="pass-cta">
+    <a class="dl-btn" href="index.html">Pick an app and buy the Pass inside it</a>
+    <a class="dl-btn secondary" href="https://github.com/lioilsources/Pass">How it works under the hood</a>
+  </div>
+</header>
+
+<section>
+  <h2>How it works</h2>
+  <ol class="pass-steps">
+    <li><b>Buy the Pass in any app</b>Open the paywall in any of my apps and choose “Ol1n Pass”. Payment goes through the App Store or Google Play as usual.</li>
+    <li><b>The other apps recognise it on their own</b>On iPhone and iPad there is no sign-in — the apps hand the Pass over through the shared keychain. On Android the installed apps hand it to each other, or you link it with your Google account or a short code.</li>
+    <li><b>New app = unlocked from day one</b>Every new app of mine ships with the Pass built into its first version. Nothing to buy again.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>What the Pass unlocks and what it does not</h2>
+  <div class="pass-cols">
+    <div>
+      <h3>Unlocks</h3>
+      <ul>
+        <li>Every one-time unlock: skins, packs, collections, premium modes.</li>
+        <li>In every app that already has the Pass — the list is below.</li>
+        <li>In every future app from its first version.</li>
+        <li>For the whole family through Family Sharing on the App Store.</li>
+      </ul>
+    </div>
+    <div class="no">
+      <h3>Does not unlock</h3>
+      <ul>
+        <li>In-game currency and other consumables. In games the Pass gives a one-time starter bonus instead.</li>
+        <li>Third-party apps. Only mine.</li>
+        <li>Anything that would need an account or a subscription with somebody else.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Apps in the Pass</h2>
+  <div class="pass-apps" data-src="pass.json"></div>
+  <noscript><p class="pass-apps-note">The current list of apps and the value total is in <a href="pass.json">pass.json</a>. Today: Kirian (skins, $10), Lexify (all decks, $20) and more apps over time.</p></noscript>
+  <p class="pass-apps-note">An app marked “soon” does not have the Pass yet; it arrives with its next version. The list is loaded from the same file the apps read.</p>
+  <span class="pass-i18n" data-key="soon" hidden>soon</span>
+  <span class="pass-i18n" data-key="value" hidden>value</span>
+  <span class="pass-i18n" data-key="appstore" hidden>App Store</span>
+  <span class="pass-i18n" data-key="playstore" hidden>Google Play</span>
+  <span class="pass-i18n" data-key="nothing" hidden>no one-time unlocks yet</span>
+  <span class="pass-i18n" data-key="error" hidden>The list could not be loaded. Please try again.</span>
+</section>
+
+<section>
+  <h2>Forever, or for a year</h2>
+  <div class="pass-yearly">
+    <div class="pass-plan main">
+      <b>Ol1n Pass</b>
+      <p class="price">$49</p>
+      <p class="per">once, forever</p>
+      <ul>
+        <li>Every app, current and future.</li>
+        <li>Family Sharing on the App Store.</li>
+        <li>No renewals, no reminders.</li>
+      </ul>
+    </div>
+    <div class="pass-plan">
+      <b>Ol1n Pass Yearly</b>
+      <p class="price">$14.99</p>
+      <p class="per">per year, cancel any time</p>
+      <ul>
+        <li>The same entitlement as lifetime while the subscription runs.</li>
+        <li>For trying it out before you decide on forever.</li>
+        <li>Managed in your App Store / Google Play account.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="pass-faq">
+  <h2>Questions</h2>
+  <details><summary>Do I have to sign in anywhere?</summary><p>Not on iPhone or iPad. The apps hand the Pass over through Apple's shared keychain, so being signed in to your Apple account as usual is enough. On Android the installed apps hand the Pass to each other; if you have only one, you can link it with your Google account or with an eight-character code shown by the app that has the Pass.</p></details>
+  <details><summary>I bought the Pass on iPhone, does it work on Android?</summary><p>It does. Show a code in the app that has the Pass and enter it in the app on the other platform. The code is valid for 15 minutes and works once.</p></details>
+  <details><summary>What if I delete an app or change phones?</summary><p>Use “Restore purchases” in any of my apps. The purchase is tied to your App Store or Google Play account, not to the device.</p></details>
+  <details><summary>Does Family Sharing work?</summary><p>On the App Store yes, the Pass has it turned on. Google Play Family Library is under consideration; the current state is on the paywall in the app.</p></details>
+  <details><summary>What about the kids' apps?</summary><p>Kids' apps never require a sign-in. On iPhone the Pass works without an account; on Android the Google account link sits behind a parental gate and is an optional step.</p></details>
+  <details><summary>What if I return the Pass?</summary><p>Refunds are handled by the App Store or Google Play under their rules. After a refund the Pass disappears from every app at the same time.</p></details>
+  <details><summary>Is $49 really fixed?</summary><p>Yes. The value of the unlocks above grows with every app, the price of the Pass does not. Whoever buys earlier gets more for the same money.</p></details>
+</section>
+
+<p class="pass-foot">The purchase always goes through the App Store or Google Play. The entitlement is shared between the apps through my server; there are no licence keys outside the stores.</p>
+
+</div>
+
+<script>
+(function () {
+  var box = document.querySelector('.pass-apps');
+  if (!box || !window.fetch) return;
+  var t = {};
+  document.querySelectorAll('.pass-i18n').forEach(function (s) { t[s.getAttribute('data-key')] = s.textContent; });
+  function usd(n) { return '$' + (Math.round(n * 100) / 100).toString().replace(/\.0+$/, ''); }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  fetch(box.getAttribute('data-src'), { cache: 'no-cache' }).then(function (r) { return r.json(); }).then(function (cat) {
+    var total = 0;
+    cat.apps.forEach(function (a) {
+      var card = el('article', 'pass-app' + (a.pass_since ? '' : ' pending'));
+      var head = el('div', 'head');
+      head.appendChild(el('h3', null, a.name));
+      if (a.unlock_value_usd != null) { head.appendChild(el('span', 'val', usd(a.unlock_value_usd))); if (a.pass_since) { total += a.unlock_value_usd; } }
+      card.appendChild(head);
+      card.appendChild(el('p', 'what', (a.unlocks && a.unlocks.length) ? a.unlocks.join(', ') : t.nothing));
+      if (!a.pass_since) card.appendChild(el('span', 'soon', t.soon));
+      var stores = el('div', 'stores');
+      if (a.appstore_url) { var l1 = el('a'); l1.href = a.appstore_url; l1.title = t.appstore; var i1 = el('img'); i1.src = 'assets/img/store-appstore.svg'; i1.alt = t.appstore; l1.appendChild(i1); stores.appendChild(l1); }
+      if (a.playstore_url) { var l2 = el('a'); l2.href = a.playstore_url; l2.title = t.playstore; var i2 = el('img'); i2.src = 'assets/img/store-playstore.svg'; i2.alt = t.playstore; l2.appendChild(i2); stores.appendChild(l2); }
+      if (stores.childNodes.length) card.appendChild(stores);
+      box.appendChild(card);
+    });
+    var tot = document.querySelector('[data-total]'); if (tot) tot.textContent = usd(total);
+    var pr = document.querySelector('[data-price]'); if (pr && cat.pass && cat.pass.lifetime_usd) pr.textContent = usd(cat.pass.lifetime_usd);
+  }).catch(function () { box.appendChild(el('p', 'pass-apps-note', t.error)); });
+})();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "https://olin.now/pass#product",
+  "name": "Ol1n Pass",
+  "url": "__URL__",
+  "inLanguage": "__LANG__",
+  "image": "__OGIMAGE__",
+  "description": "A one-time purchase that unlocks every premium feature in every Ol1n app on the App Store and Google Play, including apps that have not shipped yet.",
+  "brand": { "@type": "Brand", "name": "Ol1n" },
+  "offers": [
+    { "@type": "Offer", "name": "Ol1n Pass", "price": "49.00", "priceCurrency": "USD", "url": "https://olin.now/pass" },
+    { "@type": "Offer", "name": "Ol1n Pass Yearly", "price": "14.99", "priceCurrency": "USD", "url": "https://olin.now/pass" }
+  ]
+}
+</script>

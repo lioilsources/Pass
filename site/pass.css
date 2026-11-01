@@ -1,0 +1,118 @@
+/* olin.now/pass — loaded AFTER store.css. Source of truth is the Pass repo
+   (site/pass.css); `make sync-site` there copies it here. The store's layout
+   is all CSS variables, so this file is a palette plus the card grid. */
+:root {
+  --bg: #0f1a12;
+  --bg-soft: #16261a;
+  --card: #152318;
+  --card-hover: #1b2d1f;
+  --text: #cfd8cc;
+  --text-dim: #8d9a89;
+  --text-strong: #f1f5ee;
+  --accent: #7bd389;        /* mint — one pass, every app */
+  --accent-soft: rgba(123, 211, 137, 0.14);
+  --border: #26382a;
+  color-scheme: dark;
+}
+
+body { background: var(--bg); }
+strong { color: var(--text-strong); font-weight: 600; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+::selection { background: var(--accent); color: #000; }
+.dl-btn { color: #000; cursor: pointer; }
+.dl-btn.secondary { color: var(--text-strong); }
+
+.lang-menu ul { box-shadow: 0 12px 32px rgba(0, 0, 0, .6); }
+.lang-menu img { box-shadow: 0 0 0 1px rgba(255, 255, 255, .18); }
+.lang-menu summary { font-size: inherit; background: none; }
+
+/* ---- top bar ---- */
+.pass-top {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  font-size: 14px; color: var(--text-dim);
+}
+.pass-top .home { color: var(--text-dim); }
+.pass-top .home:hover { color: var(--accent); text-decoration: none; }
+
+/* ---- hero ---- */
+.pass-hero { padding: 64px 0 8px; max-width: 860px; }
+.pass-kicker { margin: 0 0 12px; color: var(--accent); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; font-size: 13px; }
+.pass-hero h1 {
+  margin: 0 0 20px; color: var(--text-strong);
+  font-size: clamp(34px, 5.4vw, 58px); line-height: 1.08; letter-spacing: -0.02em; font-weight: 700;
+  text-wrap: balance;
+}
+.pass-lead { font-size: 19px; line-height: 1.6; max-width: 62ch; margin: 0; }
+
+/* The price line: today's value of every unlock against the one fixed price */
+.pass-value {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px;
+  margin: 36px 0 0; padding: 22px 26px;
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.pass-value div { display: flex; flex-direction: column; gap: 2px; }
+.pass-value .lbl { font-size: 13px; color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; }
+.pass-value .num { font-size: 34px; font-weight: 700; color: var(--text-strong); line-height: 1.1; }
+.pass-value .num.pass { color: var(--accent); }
+.pass-value .arrow { font-size: 26px; color: var(--text-dim); }
+.pass-value .note { flex-basis: 100%; margin: 4px 0 0; font-size: 14px; color: var(--text-dim); }
+
+.pass-cta { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0 0; }
+
+/* ---- sections ---- */
+.pass section { margin: 64px 0 0; }
+.pass h2 { margin: 0 0 20px; font-size: clamp(24px, 3vw, 32px); line-height: 1.2; color: var(--text-strong); }
+.pass-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); counter-reset: step; }
+.pass-steps li {
+  counter-increment: step; padding: 22px 22px 22px 64px; position: relative;
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.pass-steps li::before {
+  content: counter(step); position: absolute; left: 20px; top: 20px;
+  width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--accent); color: #000; font-weight: 700;
+}
+.pass-steps b { display: block; color: var(--text-strong); margin-bottom: 6px; }
+
+.pass-cols { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.pass-cols > div { padding: 22px 24px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); }
+.pass-cols h3 { margin: 0 0 12px; font-size: 18px; color: var(--text-strong); }
+.pass-cols ul { margin: 0; padding-left: 20px; line-height: 1.6; }
+.pass-cols .no h3 { color: var(--text-dim); }
+
+/* ---- app cards (filled by script from pass.json) ---- */
+.pass-apps { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
+.pass-app {
+  display: flex; flex-direction: column; gap: 10px; padding: 20px;
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.pass-app:hover { background: var(--card-hover); }
+.pass-app .head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.pass-app h3 { margin: 0; font-size: 18px; color: var(--text-strong); }
+.pass-app .val { font-weight: 700; color: var(--accent); white-space: nowrap; }
+.pass-app .what { margin: 0; color: var(--text); font-size: 15px; line-height: 1.5; }
+.pass-app .soon { font-size: 13px; color: var(--text-dim); }
+.pass-app .stores { display: flex; gap: 12px; margin-top: auto; }
+.pass-app .stores img { width: 40px; height: 40px; border-radius: 10px; }
+.pass-app.pending { opacity: .72; }
+.pass-apps-note { margin: 16px 0 0; font-size: 14px; color: var(--text-dim); }
+
+/* ---- yearly ---- */
+.pass-yearly { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.pass-plan { padding: 24px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); }
+.pass-plan.main { border-color: var(--accent); }
+.pass-plan .price { font-size: 32px; font-weight: 700; color: var(--text-strong); margin: 6px 0 2px; }
+.pass-plan .per { font-size: 14px; color: var(--text-dim); margin: 0 0 12px; }
+.pass-plan ul { margin: 0; padding-left: 20px; line-height: 1.6; }
+
+/* ---- FAQ ---- */
+.pass-faq details { padding: 14px 20px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; margin: 0 0 10px; }
+.pass-faq summary { cursor: pointer; font-weight: 600; color: var(--text-strong); }
+.pass-faq p { margin: 10px 0 0; line-height: 1.6; }
+
+.pass-foot { margin: 64px 0 0; font-size: 14px; color: var(--text-dim); }
+
+@media (max-width: 600px) {
+  .pass-hero { padding-top: 40px; }
+  .pass-value .num { font-size: 28px; }
+}
