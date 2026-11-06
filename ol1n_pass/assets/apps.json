@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-01",
+  "updated": "2026-11-06",
   "entitlement": "all_apps",
   "pass": {
     "name": "Ol1n Pass",
@@ -45,7 +45,7 @@
       "slug": "mirrorbooth",
       "name": "Mirror Booth Photos",
       "ios_bundle_id": "com.ol1n.mirrorbooth",
-      "android_package": "com.ol1n.mirrorbooth",
+      "android_package": "com.ab.mirrorbooth",
       "appstore_id": "6767824892",
       "appstore_url": "https://apps.apple.com/app/id6767824892",
       "playstore_url": null,
