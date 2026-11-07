@@ -152,6 +152,21 @@ func (s *Server) appsJSON(w http.ResponseWriter, r *http.Request) {
 	w.Write(s.cfg.CatalogJSON)
 }
 
+// entitlementFailed writes the error response for a failed entitlement check
+// and reports whether it did. An unknown subscriber is not a failure.
+func (s *Server) entitlementFailed(w http.ResponseWriter, err error) bool {
+	switch {
+	case err == nil, errors.Is(err, revenuecat.ErrNotFound):
+		return false
+	case errors.Is(err, revenuecat.ErrNotConfigured):
+		writeError(w, http.StatusServiceUnavailable, "not_configured", "entitlement checks are not configured yet")
+	default:
+		s.cfg.Logger.Error("revenuecat", "err", err)
+		writeError(w, http.StatusBadGateway, "upstream", "entitlement check failed")
+	}
+	return true
+}
+
 func (s *Server) entitlements(w http.ResponseWriter, r *http.Request) {
 	user := r.URL.Query().Get("user")
 	if user == "" {
@@ -159,9 +174,7 @@ func (s *Server) entitlements(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	ok, err := s.cfg.Entitlements.HasEntitlement(r.Context(), user, catalog.Entitlement)
-	if err != nil && !errors.Is(err, revenuecat.ErrNotFound) {
-		s.cfg.Logger.Error("revenuecat", "err", err)
-		writeError(w, http.StatusBadGateway, "upstream", "entitlement check failed")
+	if s.entitlementFailed(w, err) {
 		return
 	}
 	writeJSON(w, http.StatusOK, map[string]any{
@@ -189,9 +202,7 @@ func (s *Server) linkCode(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	ok, err := s.cfg.Entitlements.HasEntitlement(r.Context(), in.AppUserID, catalog.Entitlement)
-	if err != nil && !errors.Is(err, revenuecat.ErrNotFound) {
-		s.cfg.Logger.Error("revenuecat", "err", err)
-		writeError(w, http.StatusBadGateway, "upstream", "entitlement check failed")
+	if s.entitlementFailed(w, err) {
 		return
 	}
 	if !ok {

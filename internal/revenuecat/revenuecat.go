@@ -22,6 +22,22 @@ const DefaultBaseURL = "https://api.revenuecat.com"
 // ErrNotFound is returned when RevenueCat does not know the app user id.
 var ErrNotFound = errors.New("revenuecat: subscriber not found")
 
+// ErrNotConfigured is returned by Unconfigured: the server runs without a
+// RevenueCat key, so it can serve the catalog but never answer "has Pass".
+var ErrNotConfigured = errors.New("revenuecat: no secret API key configured")
+
+// Unconfigured stands in for Client while RC_SECRET_API_KEY is unset. Every
+// entitlement check fails, so no request can ever be granted a Pass.
+type Unconfigured struct{}
+
+// HasEntitlement always fails with ErrNotConfigured.
+func (Unconfigured) HasEntitlement(context.Context, string, string) (bool, error) {
+	return false, ErrNotConfigured
+}
+
+// Invalidate does nothing; there is no cache.
+func (Unconfigured) Invalidate(string) {}
+
 // Client checks entitlements with the project's secret API key (v1).
 type Client struct {
 	BaseURL   string

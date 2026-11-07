@@ -117,11 +117,14 @@ func serve(logger *slog.Logger) error {
 	}
 	defer st.Close()
 
-	rcKey := os.Getenv("RC_SECRET_API_KEY")
-	if rcKey == "" {
-		return errors.New("RC_SECRET_API_KEY is required")
+	// Without a RevenueCat key the server still serves health and the catalog;
+	// every entitlement check answers 503, so nobody is ever granted a Pass.
+	var rc httpapi.Entitlements = revenuecat.Unconfigured{}
+	if rcKey := os.Getenv("RC_SECRET_API_KEY"); rcKey != "" {
+		rc = revenuecat.New(rcKey)
+	} else {
+		logger.Warn("RC_SECRET_API_KEY is empty; entitlement checks and link codes answer 503")
 	}
-	rc := revenuecat.New(rcKey)
 
 	n := notify.New(cat)
 	n.DiscordWebhookURL = os.Getenv("DISCORD_WEBHOOK_URL")

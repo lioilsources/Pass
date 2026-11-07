@@ -14,15 +14,20 @@ import (
 
 	"github.com/lioilsources/Pass/internal/catalog"
 	"github.com/lioilsources/Pass/internal/notify"
+	"github.com/lioilsources/Pass/internal/revenuecat"
 	"github.com/lioilsources/Pass/internal/store"
 )
 
 type fakeEnt struct {
 	holders     map[string]bool
 	invalidated []string
+	err         error
 }
 
 func (f *fakeEnt) HasEntitlement(_ context.Context, user, ent string) (bool, error) {
+	if f.err != nil {
+		return false, f.err
+	}
 	return ent == "all_apps" && f.holders[user], nil
 }
 func (f *fakeEnt) Invalidate(user string) { f.invalidated = append(f.invalidated, user) }
@@ -114,6 +119,21 @@ func TestEntitlements(t *testing.T) {
 		t.Fatal(code, out)
 	}
 	if code, _ := h.do(t, "GET", "/v1/entitlements", ""); code != 400 {
+		t.Fatal(code)
+	}
+}
+
+func TestWithoutRevenueCatKey(t *testing.T) {
+	h := newHarness(t)
+	_, err := revenuecat.Unconfigured{}.HasEntitlement(context.Background(), "holder", "all_apps")
+	h.ent.err = err
+	if code, out := h.do(t, "GET", "/v1/entitlements?user=holder", ""); code != 503 || out["error"] != "not_configured" {
+		t.Fatal(code, out)
+	}
+	if code, out := h.do(t, "POST", "/v1/link-code", `{"app_user_id":"holder"}`); code != 503 || out["error"] != "not_configured" {
+		t.Fatal(code, out)
+	}
+	if code, _ := h.do(t, "GET", "/pass/apps.json", ""); code != 200 {
 		t.Fatal(code)
 	}
 }
