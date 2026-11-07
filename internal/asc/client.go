@@ -231,6 +231,11 @@ func (c *Client) Get(ctx context.Context, path string, query url.Values) (*Docum
 	return doc, nil
 }
 
+// Patch performs PATCH with a JSON body.
+func (c *Client) Patch(ctx context.Context, path string, body any) (*Document, error) {
+	return c.do(ctx, http.MethodPatch, path, nil, body)
+}
+
 // Post performs POST with a JSON body.
 func (c *Client) Post(ctx context.Context, path string, body any) (*Document, error) {
 	return c.do(ctx, http.MethodPost, path, nil, body)

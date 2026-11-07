@@ -85,6 +85,9 @@ func Provision(ctx context.Context, api API, app catalog.App, pass catalog.Pass,
 	default:
 		say("IAP %s exists → %s (state %s)", ids.IOSLifetime, iap.ID, iap.Str("state"))
 	}
+	if iap.Attributes["familySharable"] != true || iap.Str("reviewNote") == "" {
+		say("MANUAL in App Store Connect web UI (the API refuses these): %s → turn on Family Sharing, review note: %q", ids.IOSLifetime, ReviewNote)
+	}
 	if err := ensure(ctx, w, "IAP localization "+Locale,
 		func() (bool, error) { return api.HasIAPLocalization(ctx, iap.ID, Locale) },
 		func() error { return api.CreateIAPLocalization(ctx, iap.ID, Locale, LifetimeName, LifetimeDesc) }); err != nil {
@@ -254,11 +257,13 @@ func (l Live) FindIAP(ctx context.Context, appID, productID string) (Resource, e
 
 func (l Live) CreateIAP(ctx context.Context, appID, productID, name, reviewNote string) (Resource, error) {
 	// https://developer.apple.com/documentation/appstoreconnectapi/inapppurchasev2create
+	// The API rejects reviewNote and familySharable on create and on update
+	// (409 ATTRIBUTE.NOT_ALLOWED, seen 2026-11-07), so Provision prints them
+	// as a manual step for the App Store Connect web UI instead.
 	body := map[string]any{"data": map[string]any{
 		"type": "inAppPurchases",
 		"attributes": map[string]any{
 			"name": name, "productId": productID, "inAppPurchaseType": "NON_CONSUMABLE",
-			"reviewNote": reviewNote, "familySharable": true,
 		},
 		"relationships": map[string]any{"app": rel("apps", appID)},
 	}}

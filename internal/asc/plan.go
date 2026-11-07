@@ -49,7 +49,7 @@ func (p *Planner) FindIAP(_ context.Context, appID, productID string) (Resource,
 }
 
 func (p *Planner) CreateIAP(_ context.Context, appID, productID, name, _ string) (Resource, error) {
-	p.step("POST /v2/inAppPurchases {NON_CONSUMABLE, productId %s, name %q, familySharable, reviewNote} → <iap-id>", productID, name)
+	p.step("POST /v2/inAppPurchases {NON_CONSUMABLE, productId %s, name %q} → <iap-id> (Family Sharing and review note: manual, web UI)", productID, name)
 	return Resource{ID: "<iap-id>", Type: "inAppPurchases"}, nil
 }
 
