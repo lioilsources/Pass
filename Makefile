@@ -2,7 +2,7 @@
 .DEFAULT_GOAL := help
 
 OLIN_NOW ?= ../ol1n.now
-IMAGE    ?= ghcr.io/lioilsources/pass-api
+IMAGE    ?= pass-api
 TAG      ?= latest
 GOFLAGS  ?= -trimpath
 export CGO_ENABLED = 0
@@ -41,12 +41,11 @@ sync-site: ## Copy site/ + catalog into the ol1n.now checkout ($(OLIN_NOW)); com
 	cp catalog/apps.json "$(OLIN_NOW)/static/pass.json"
 	@echo "synced → $(OLIN_NOW); now: cd $(OLIN_NOW) && python3 scripts/check-page-translation.py pages/pass.html pages/pass.en.html && make build"
 
-docker: ## Build the pass-api image for linux/amd64 (JODA)
+docker: ## Build the pass-api image locally (smoke test; JODA builds its own)
 	docker build --platform linux/amd64 -t $(IMAGE):$(TAG) -f deploy/Dockerfile .
 
-deploy-pass-api: docker ## Push the image and restart pass-api on JODA (ssh alias `joda`)
-	docker push $(IMAGE):$(TAG)
-	ssh joda 'cd ~/deploy/pass-api && docker compose pull && docker compose up -d && docker compose ps'
+deploy-pass-api: ## Pull the repo on JODA, rebuild and restart pass-api there (ssh alias `joda`)
+	ssh joda 'cd ~/deploy/pass-api && git -C src pull --ff-only && docker compose up -d --build && docker compose ps'
 
 clean: ## Remove build output
 	rm -rf bin

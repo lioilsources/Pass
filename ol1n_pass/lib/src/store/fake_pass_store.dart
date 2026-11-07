@@ -9,7 +9,7 @@ import 'pass_store.dart';
 class FakePassStore with PassStoreListeners implements PassStore {
   FakePassStore({
     Set<String>? entitledUsers,
-    this.prices = const PassPrices(lifetime: r'$49.00', yearly: r'$14.99'),
+    this.prices = const PassPrices(lifetime: r'$49.99', yearly: r'$14.99'),
     this.nextPurchase = const PassPurchaseResult.success(),
   }) : entitledUsers = entitledUsers ?? <String>{};
 

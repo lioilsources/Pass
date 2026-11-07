@@ -50,6 +50,7 @@ strong { color: var(--text-strong); font-weight: 600; }
   margin: 36px 0 0; padding: 22px 26px;
   background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
 }
+.pass-value[hidden] { display: none; }
 .pass-value div { display: flex; flex-direction: column; gap: 2px; }
 .pass-value .lbl { font-size: 13px; color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; }
 .pass-value .num { font-size: 34px; font-weight: 700; color: var(--text-strong); line-height: 1.1; }

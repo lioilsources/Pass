@@ -12,7 +12,7 @@ void main() {
 
       expect(catalog.version, kPassCatalogSchemaVersion);
       expect(catalog.entitlement, 'all_apps');
-      expect(catalog.pass.lifetimeUsd, 49.0);
+      expect(catalog.pass.lifetimeUsd, 49.99);
       expect(catalog.pass.catalogUrl.toString(), 'https://olin.now/pass.json');
       expect(catalog.apps.map((a) => a.slug), contains('kirian'));
 
@@ -20,7 +20,7 @@ void main() {
       // is every app with approved one-time IAPs (`passctl asc iaps`).
       expect(catalog.appsWithPass, isEmpty);
       expect(catalog.totalUnlockValueUsd, 0);
-      expect(catalog.totalListedValueUsd, closeTo(26.73, 0.001));
+      expect(catalog.totalListedValueUsd, closeTo(35.64, 0.001));
       expect(catalog.comingSoon.length, catalog.apps.length);
     });
 

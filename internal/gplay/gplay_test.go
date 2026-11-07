@@ -11,7 +11,7 @@ import (
 )
 
 func TestMoneyAndMicros(t *testing.T) {
-	if Micros(49) != "49000000" || Micros(14.99) != "14990000" {
+	if Micros(49) != "49000000" || Micros(49.99) != "49990000" || Micros(14.99) != "14990000" {
 		t.Fatal(Micros(49), Micros(14.99))
 	}
 	m := Money(14.99, "USD")
@@ -33,7 +33,7 @@ func TestPlanDeterministic(t *testing.T) {
 	}
 	out := a.String()
 	for _, want := range []string{
-		"inappproducts.insert com.ab.kiran/pass_lifetime {managedUser, active, USD 49000000 micros",
+		"inappproducts.insert com.ab.kiran/pass_lifetime {managedUser, active, USD 49990000 micros",
 		"monetization.subscriptions.create com.ab.kiran/pass_yearly {basePlan yearly P1Y, US 14.99 USD, other regions 14.99 USD / 13.79 EUR",
 	} {
 		if !strings.Contains(out, want) {

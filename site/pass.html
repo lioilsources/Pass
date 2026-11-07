@@ -1,5 +1,5 @@
 <!-- title: Ol1n Pass — jeden nákup, všechny appky | olin.now -->
-<!-- description: Ol1n Pass odemkne všechny prémiové funkce ve všech appkách od Ol1na za 49 USD navždy, včetně appek, které teprve vyjdou. Hodnota roste, cena ne. -->
+<!-- description: Ol1n Pass odemkne všechny prémiové funkce ve všech appkách od Ol1na za 49,99 USD navždy, včetně appek, které teprve vyjdou. Hodnota roste, cena ne. -->
 <div class="pass">
 
 <nav class="pass-top" aria-label="Navigace">
@@ -10,12 +10,12 @@
 <header class="pass-hero">
   <p class="pass-kicker">Ol1n Pass</p>
   <h1>Jeden nákup. Všechny appky. Navždy.</h1>
-  <p class="pass-lead">Ol1n Pass odemkne všechny prémiové funkce ve všech mých appkách na App Storu i Google Play — a taky v těch, které teprve vyjdou. Stojí 49 USD, jednou. S každou novou appkou je toho za stejnou cenu víc.</p>
+  <p class="pass-lead">Ol1n Pass odemkne všechny prémiové funkce ve všech mých appkách na App Storu i Google Play — a taky v těch, které teprve vyjdou. Stojí 49,99 USD, jednou. Další appky jsou v přípravě a každá nová přibude do Passu bez doplatku.</p>
 
-  <div class="pass-value" aria-live="polite">
+  <div class="pass-value" aria-live="polite" hidden>
     <div><span class="lbl">Hodnota všech balíčků dnes</span><span class="num" data-total>—</span></div>
     <span class="arrow" aria-hidden="true">→</span>
-    <div><span class="lbl">Ol1n Pass</span><span class="num pass" data-price>$49</span></div>
+    <div><span class="lbl">Ol1n Pass</span><span class="num pass" data-price>$49.99</span></div>
     <p class="note">Součet všech jednorázových odemknutí v aktuálních appkách. Číslo se počítá ze seznamu níže a roste; cena Passu zůstává.</p>
   </div>
 
@@ -75,7 +75,7 @@
   <div class="pass-yearly">
     <div class="pass-plan main">
       <b>Ol1n Pass</b>
-      <p class="price">$49</p>
+      <p class="price">$49.99</p>
       <p class="per">jednou, navždy</p>
       <ul>
         <li>Všechny appky, současné i budoucí.</li>
@@ -104,7 +104,7 @@
   <details><summary>Funguje Family Sharing?</summary><p>Na App Storu ano, Pass ho má zapnutý. Google Play Family Library zvažuji; aktuální stav je v appce na paywallu.</p></details>
   <details><summary>Jak je to s dětskými appkami?</summary><p>Dětské appky nikdy nevyžadují přihlášení. Na iPhonu funguje Pass bez účtu; na Androidu je propojení přes Google účet schované za rodičovskou bránou a jde o volitelný krok.</p></details>
   <details><summary>Když Pass vrátím?</summary><p>Refund řeší App Store nebo Google Play podle svých pravidel. Po vrácení Pass zmizí ve všech appkách zároveň.</p></details>
-  <details><summary>Je 49 USD opravdu napevno?</summary><p>Ano. Hodnota balíčků nahoře roste s každou appkou, cena Passu ne. Kdo koupí dřív, dostane víc za stejné peníze.</p></details>
+  <details><summary>Je 49,99 USD opravdu napevno?</summary><p>Ano. S každou novou appkou dostaneš za stejnou cenu víc, cena Passu se nemění. Kdo koupí dřív, dostane všechny budoucí appky bez doplatku.</p></details>
 </section>
 
 <p class="pass-foot">Nákup vždy probíhá přes App Store nebo Google Play. Nárok se mezi appkami sdílí přes můj server; žádné licenční klíče mimo store neexistují.</p>
@@ -137,6 +137,8 @@
     });
     var tot = document.querySelector('[data-total]'); if (tot) tot.textContent = usd(total);
     var pr = document.querySelector('[data-price]'); if (pr && cat.pass && cat.pass.lifetime_usd) pr.textContent = usd(cat.pass.lifetime_usd);
+    // Show the value comparison only once the apps are worth more than the Pass.
+    var box2 = document.querySelector('.pass-value'); if (box2 && cat.pass && total > cat.pass.lifetime_usd) box2.hidden = false;
   }).catch(function () { box.appendChild(el('p', 'pass-apps-note', t.error)); });
 })();
 </script>
@@ -153,7 +155,7 @@
   "description": "Jednorázový nákup, který odemkne všechny prémiové funkce ve všech appkách od Ol1na na App Storu i Google Play, včetně appek, které teprve vyjdou.",
   "brand": { "@type": "Brand", "name": "Ol1n" },
   "offers": [
-    { "@type": "Offer", "name": "Ol1n Pass", "price": "49.00", "priceCurrency": "USD", "url": "https://olin.now/pass" },
+    { "@type": "Offer", "name": "Ol1n Pass", "price": "49.99", "priceCurrency": "USD", "url": "https://olin.now/pass" },
     { "@type": "Offer", "name": "Ol1n Pass Yearly", "price": "14.99", "priceCurrency": "USD", "url": "https://olin.now/pass" }
   ]
 }

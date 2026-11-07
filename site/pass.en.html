@@ -1,5 +1,5 @@
 <!-- title: Ol1n Pass — one purchase, every app | olin.now -->
-<!-- description: Ol1n Pass unlocks every premium feature in every Ol1n app for $49, once — including apps that have not shipped yet. The value grows, the price does not. -->
+<!-- description: Ol1n Pass unlocks every premium feature in every Ol1n app for $49.99, once — including apps that have not shipped yet. The value grows, the price does not. -->
 <div class="pass">
 
 <nav class="pass-top" aria-label="Navigation">
@@ -10,12 +10,12 @@
 <header class="pass-hero">
   <p class="pass-kicker">Ol1n Pass</p>
   <h1>One purchase. Every app. Forever.</h1>
-  <p class="pass-lead">Ol1n Pass unlocks every premium feature in all of my apps on the App Store and Google Play — and in the ones that have not shipped yet. It costs $49, once. Every new app adds more for the same price.</p>
+  <p class="pass-lead">Ol1n Pass unlocks every premium feature in all of my apps on the App Store and Google Play — and in the ones that have not shipped yet. It costs $49.99, once. More apps are on the way, and each one joins the Pass at no extra cost.</p>
 
-  <div class="pass-value" aria-live="polite">
+  <div class="pass-value" aria-live="polite" hidden>
     <div><span class="lbl">Value of every unlock today</span><span class="num" data-total>—</span></div>
     <span class="arrow" aria-hidden="true">→</span>
-    <div><span class="lbl">Ol1n Pass</span><span class="num pass" data-price>$49</span></div>
+    <div><span class="lbl">Ol1n Pass</span><span class="num pass" data-price>$49.99</span></div>
     <p class="note">The sum of all one-time unlocks in the current apps. It is computed from the list below and keeps growing; the price of the Pass stays.</p>
   </div>
 
@@ -75,7 +75,7 @@
   <div class="pass-yearly">
     <div class="pass-plan main">
       <b>Ol1n Pass</b>
-      <p class="price">$49</p>
+      <p class="price">$49.99</p>
       <p class="per">once, forever</p>
       <ul>
         <li>Every app, current and future.</li>
@@ -104,7 +104,7 @@
   <details><summary>Does Family Sharing work?</summary><p>On the App Store yes, the Pass has it turned on. Google Play Family Library is under consideration; the current state is on the paywall in the app.</p></details>
   <details><summary>What about the kids' apps?</summary><p>Kids' apps never require a sign-in. On iPhone the Pass works without an account; on Android the Google account link sits behind a parental gate and is an optional step.</p></details>
   <details><summary>What if I return the Pass?</summary><p>Refunds are handled by the App Store or Google Play under their rules. After a refund the Pass disappears from every app at the same time.</p></details>
-  <details><summary>Is $49 really fixed?</summary><p>Yes. The value of the unlocks above grows with every app, the price of the Pass does not. Whoever buys earlier gets more for the same money.</p></details>
+  <details><summary>Is $49.99 really fixed?</summary><p>Yes. Every new app gives you more for the same price; the price of the Pass does not change. Whoever buys earlier gets every future app at no extra cost.</p></details>
 </section>
 
 <p class="pass-foot">The purchase always goes through the App Store or Google Play. The entitlement is shared between the apps through my server; there are no licence keys outside the stores.</p>
@@ -137,6 +137,8 @@
     });
     var tot = document.querySelector('[data-total]'); if (tot) tot.textContent = usd(total);
     var pr = document.querySelector('[data-price]'); if (pr && cat.pass && cat.pass.lifetime_usd) pr.textContent = usd(cat.pass.lifetime_usd);
+    // Show the value comparison only once the apps are worth more than the Pass.
+    var box2 = document.querySelector('.pass-value'); if (box2 && cat.pass && total > cat.pass.lifetime_usd) box2.hidden = false;
   }).catch(function () { box.appendChild(el('p', 'pass-apps-note', t.error)); });
 })();
 </script>
@@ -153,7 +155,7 @@
   "description": "A one-time purchase that unlocks every premium feature in every Ol1n app on the App Store and Google Play, including apps that have not shipped yet.",
   "brand": { "@type": "Brand", "name": "Ol1n" },
   "offers": [
-    { "@type": "Offer", "name": "Ol1n Pass", "price": "49.00", "priceCurrency": "USD", "url": "https://olin.now/pass" },
+    { "@type": "Offer", "name": "Ol1n Pass", "price": "49.99", "priceCurrency": "USD", "url": "https://olin.now/pass" },
     { "@type": "Offer", "name": "Ol1n Pass Yearly", "price": "14.99", "priceCurrency": "USD", "url": "https://olin.now/pass" }
   ]
 }

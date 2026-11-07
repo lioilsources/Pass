@@ -79,7 +79,7 @@ func TestPlanDeterministic(t *testing.T) {
 	for _, want := range []string{
 		"filter[bundleId]=com.ol1n.kiran",
 		"POST /v2/inAppPurchases {NON_CONSUMABLE, productId com.ol1n.pass.lifetime.kirian",
-		"customerPrice 49.00",
+		"customerPrice 49.99",
 		"POST /v1/subscriptionGroups {referenceName ol1n_pass}",
 		"productId com.ol1n.pass.yearly.kirian",
 		"customerPrice 14.99",
@@ -152,7 +152,7 @@ func TestLiveProvisionIdempotent(t *testing.T) {
 		}
 		list(w, []Resource{
 			{Type: "inAppPurchasePricePoints", ID: "PP0", Attributes: map[string]any{"customerPrice": "0.99"}},
-			{Type: "inAppPurchasePricePoints", ID: "PP49", Attributes: map[string]any{"customerPrice": "49.0"}},
+			{Type: "inAppPurchasePricePoints", ID: "PP49", Attributes: map[string]any{"customerPrice": "49.99"}},
 		})
 	})
 	mux.HandleFunc("POST /v1/inAppPurchasePriceSchedules", func(w http.ResponseWriter, r *http.Request) {

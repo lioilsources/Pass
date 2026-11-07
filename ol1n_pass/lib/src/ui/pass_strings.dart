@@ -128,7 +128,7 @@ class PassStrings {
   final String error;
   final String openStore;
 
-  /// `$49` / `$14.99` style formatting for catalog USD values.
+  /// `$49.99` / `$14.99` style formatting for catalog USD values.
   static String usd(double value) =>
       value == value.roundToDouble() ? '\$${value.round()}' : '\$${value.toStringAsFixed(2)}';
 }

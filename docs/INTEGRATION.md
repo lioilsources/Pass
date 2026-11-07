@@ -143,7 +143,7 @@ PassPaywall(
 
 Widget sám ukáže karty **Ol1n Pass** (lifetime) a **Ol1n Pass Yearly** (jen když RC offering
 pro tuhle appku `$rc_annual` má), pod nimi seznam appek z katalogu s hodnotou unlocků a součtem
-(„Hodnota všech balíčků dnes: $XX · Ol1n Pass $49“), a na Androidu „Propojit s Google účtem“ /
+(„Hodnota všech balíčků dnes: $XX · Ol1n Pass $49.99“, jen když hodnota převyšuje cenu), a na Androidu „Propojit s Google účtem“ /
 „Zadat kód“. Po koupi `PassBadge()` kdekoli v nastavení/obchodě: „Máš Ol1n Pass — odemčeno i v: …“
 s odkazy do storů (cross-promo zdarma, plán §1). Kde paywall ukázat: tam, kde dnes appka ukazuje
 cenu per-app unlocku (Kiran: `SkinSelector` při kliknutí na zamčený skin; Lexify: detail placeného

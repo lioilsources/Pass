@@ -116,7 +116,7 @@ class PassService {
         entitlement: PassConfig.defaultEntitlementId,
         pass: PassInfo(
           name: 'Ol1n Pass',
-          lifetimeUsd: 49,
+          lifetimeUsd: 49.99,
           yearlyUsd: 14.99,
           landingUrl: Uri(),
           catalogUrl: Uri.parse(config.catalogUrl),

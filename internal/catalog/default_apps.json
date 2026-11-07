@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "updated": "2026-11-06",
+  "updated": "2026-11-07",
   "entitlement": "all_apps",
   "pass": {
     "name": "Ol1n Pass",
-    "lifetime_usd": 49.0,
+    "lifetime_usd": 49.99,
     "yearly_usd": 14.99,
     "landing_url": "https://olin.now/pass",
     "catalog_url": "https://olin.now/pass.json",
@@ -22,7 +22,9 @@
       "appstore_url": "https://apps.apple.com/app/id6774868017",
       "playstore_url": "https://play.google.com/store/apps/details?id=com.ab.kiran",
       "unlock_value_usd": 13.86,
-      "unlocks": ["14 ship skins"],
+      "unlocks": [
+        "14 ship skins"
+      ],
       "kids": false,
       "pass_since": null,
       "notes": "Skins are non-consumable per-skin IAPs (skin_store_service.dart). Pass unlocks all skins."
@@ -36,7 +38,9 @@
       "appstore_url": "https://apps.apple.com/app/id6784602743",
       "playstore_url": null,
       "unlock_value_usd": 10.89,
-      "unlocks": ["11 flashcard decks"],
+      "unlocks": [
+        "11 flashcard decks"
+      ],
       "kids": false,
       "pass_since": null,
       "notes": "Deck products are non-consumable (iap_service.dart). Pass unlocks every deck."
@@ -49,8 +53,10 @@
       "appstore_id": "6767824892",
       "appstore_url": "https://apps.apple.com/app/id6767824892",
       "playstore_url": null,
-      "unlock_value_usd": null,
-      "unlocks": [],
+      "unlock_value_usd": 1.98,
+      "unlocks": [
+        "2 filter collections"
+      ],
       "kids": false,
       "pass_since": null,
       "notes": "Has in_app_purchase; unlock value to be filled in from the app's product list."
@@ -64,7 +70,9 @@
       "appstore_url": "https://apps.apple.com/app/id6767237393",
       "playstore_url": "https://play.google.com/store/apps/details?id=com.ab.PoetryStreamSC",
       "unlock_value_usd": 1.98,
-      "unlocks": ["2 poetry collections"],
+      "unlocks": [
+        "2 poetry collections"
+      ],
       "kids": false,
       "pass_since": null,
       "notes": "Paid collections are non-consumable. Unlock value to be filled in."
@@ -105,8 +113,11 @@
       "appstore_id": null,
       "appstore_url": null,
       "playstore_url": null,
-      "unlock_value_usd": null,
-      "unlocks": ["sticker sheets"],
+      "unlock_value_usd": 5.94,
+      "unlocks": [
+        "5 sticker packs",
+        "saving your own presets"
+      ],
       "kids": false,
       "pass_since": null,
       "notes": "Has in_app_purchase; no public release yet."
@@ -119,8 +130,10 @@
       "appstore_id": null,
       "appstore_url": null,
       "playstore_url": null,
-      "unlock_value_usd": null,
-      "unlocks": [],
+      "unlock_value_usd": 0.99,
+      "unlocks": [
+        "GPX import"
+      ],
       "kids": false,
       "pass_since": null,
       "notes": "Has in_app_purchase; not in the store catalog yet."

@@ -78,7 +78,7 @@ passctl asc products apply --app kirian     # založí chybějící
 ```
 Co `apply` udělá: non-consumable `com.ol1n.pass.lifetime.<slug>` (reference name „Ol1n Pass“,
 Family Sharing **zapnuté**, review note z CONTRACTS §2), lokalizaci `en-US` (display name
-„Ol1n Pass“, description), price schedule s base territory USA a price pointem nejblíž 49 USD;
+„Ol1n Pass“, description), price schedule s base territory USA a price pointem nejblíž 49,99 USD;
 subscription group `ol1n_pass` a v ní `com.ol1n.pass.yearly.<slug>` (P1Y, lokalizace, cena nejblíž
 14.99 USD). Druhé spuštění nic nemění.
 
@@ -115,7 +115,7 @@ passctl play products plan  --app kirian
 passctl play products apply --app kirian
 ```
 Co `apply` udělá: one-time product `pass_lifetime` (managed, `en-US` title „Ol1n Pass“, default
-price 49 USD, status active) a subscription `pass_yearly` s base plan `yearly` (P1Y, auto-renewing,
+price 49,99 USD, status active) a subscription `pass_yearly` s base plan `yearly` (P1Y, auto-renewing,
 cena USD + EUR pro ostatní regiony). Produkt musí mít appka aspoň v **internal testing** nahranou
 APK/AAB s Billing permission, jinak Play Console produkt odmítne aktivovat — pořadí: první build
 s `ol1n_pass` → internal track → `passctl play products apply`.
@@ -129,16 +129,21 @@ s `ol1n_pass` → internal track → `passctl play products apply`.
 
 ## 4. JODA: nasazení `pass-api`
 
-1. **DNS a tunel**: Cloudflare Zero Trust → Tunnels → tunel JODA → public hostname `pass.ol1n.com` →
-   `http://caddy:80` (stejně jako `promo.ol1n.com` a `hooks.ol1n.com`). Bez Cloudflare Access —
-   endpointy volají appky anonymně.
-2. **Caddy**: vlož `deploy/Caddyfile.snippet` do Caddyfile na JODĚ a
-   `docker compose exec caddy caddy reload --config /etc/caddy/Caddyfile`. Ven jdou `/healthz`,
-   `/pass/apps.json`, `/v1/*`, `/webhooks/*`.
-3. **Compose**: `mkdir -p ~/deploy/pass-api`, zkopíruj `deploy/docker-compose.yml`, vytvoř `.env`
-   podle `.env.example` (`chmod 600`), DB je SQLite v `~/deploy/pass-api/data/pass.db` (bind mount —
-   zálohuj spolu s ostatními `~/deploy/*`). Image staví a pushuje
-   `make deploy-pass-api` z Macu (`ghcr.io/lioilsources/pass-api`, linux/amd64).
+Na JODĚ není sdílený Caddy. Každá služba má vlastní kontejner `cloudflared` s vlastním tunelem
+(vzor `~/deploy/FineTuneGallery/cloudflared/`). Port 8096 se nepublikuje.
+
+1. **Zdroj a compose**: `mkdir -p ~/deploy/pass-api/{data,cloudflared} && cd ~/deploy/pass-api`,
+   `git clone https://github.com/lioilsources/Pass.git src`, `cp src/deploy/docker-compose.yml .`.
+   Image se staví přímo na JODĚ ze `src/`, žádný registry.
+2. **`.env`**: `cp src/.env.example .env && chmod 600 .env`, vygeneruj `RC_WEBHOOK_SECRET`
+   (`openssl rand -hex 24`). Bez `RC_SECRET_API_KEY` server běží, ale nárok a link kódy vrací
+   503 `not_configured`. DB je SQLite v `~/deploy/pass-api/data/pass.db` (bind mount; `data/` musí
+   patřit uid 65532 kvůli distroless).
+3. **Tunel**: `cloudflared tunnel create pass`, credentials JSON do `cloudflared/credentials.json`,
+   `src/deploy/cloudflared.config.yml` s doplněným ID do `cloudflared/config.yml`,
+   `cloudflared tunnel route dns pass pass.ol1n.com`. Ven jdou jen `/healthz`, `/pass/*`, `/v1/*`,
+   `/webhooks/*`. Bez Cloudflare Access, appky volají anonymně.
+   Pak `docker compose up -d --build`. Aktualizace: `make deploy-pass-api`.
 4. **Discord**: na serveru Ol1n (kategorie, které spravuje Ol1nDevBot) založ kanál `#pass` →
    Integrations → Webhooks → New → URL do `DISCORD_WEBHOOK_URL`. Telegram volitelně (bot token +
    chat ID tvého privátního chatu; musí to být **jiný bot** než PromoClown nebo PromoHub — jeden

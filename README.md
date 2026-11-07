@@ -1,7 +1,7 @@
 # Ol1n Pass
 
 Jeden nákup, který odemkne všechny prémiové funkce ve všech appkách Ol1n na App Storu
-i Google Play — včetně appek, které teprve vyjdou. Lifetime za 49 USD napevno, doplňkově
+i Google Play — včetně appek, které teprve vyjdou. Lifetime za 49,99 USD napevno, doplňkově
 roční předplatné se stejným nárokem. Landing: [olin.now/pass](https://olin.now/pass).
 
 Ani App Store ani Google Play produkt „vše od vývojáře navždy“ nemají. Nákup proto vždy

@@ -12,7 +12,7 @@ Balíček pro Flutter, který každá appka přidá stejně jako `cute_kid_fonts
   (funguje i iOS ↔ Android).
 - **Katalog `apps.json`** z `https://olin.now/pass.json` (fallback bundlovaný):
   seznam appek, odkazy do storů, hodnota všech unlocků → paywall ukazuje
-  „Hodnota všech balíčků dnes: $XX · Ol1n Pass $49“.
+  „Hodnota všech balíčků dnes: $XX · Ol1n Pass $49.99“, a to jen když hodnota převyšuje cenu Passu.
 - **Widgety**: `PassPaywall` (3 karty + seznam appek + Restore + kód),
   `PassBadge`, `PassAppsList`. Česky a anglicky.
 - **Testovatelné bez storu**: `FakePassStore` a `InMemoryIdentityStore`

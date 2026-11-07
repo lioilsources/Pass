@@ -15,18 +15,31 @@ const _config = PassConfig(
   revenueCatApiKeyAndroid: 'goog_test',
 );
 
-const _doc = '''
+String _doc = _docWorth;
+
+const _docWorth = '''
 {"version":1,"updated":"2026-11-01","entitlement":"all_apps",
- "pass":{"name":"Ol1n Pass","lifetime_usd":49,"yearly_usd":14.99,
+ "pass":{"name":"Ol1n Pass","lifetime_usd":49.99,"yearly_usd":14.99,
   "landing_url":"https://olin.now/pass","catalog_url":"https://olin.now/pass.json",
   "api_url":"https://pass.ol1n.com"},
  "apps":[
   {"slug":"kirian","name":"Kirian","unlock_value_usd":10,"pass_since":"2.6.0",
    "appstore_url":"https://apps.apple.com/app/id1"},
-  {"slug":"lexify","name":"Lexify","unlock_value_usd":20,"pass_since":"1.4.0",
+  {"slug":"lexify","name":"Lexify","unlock_value_usd":45,"pass_since":"1.4.0",
    "appstore_url":"https://apps.apple.com/app/id2",
    "playstore_url":"https://play.google.com/store/apps/details?id=x"},
   {"slug":"puff","name":"Puff","unlock_value_usd":null,"pass_since":null}
+ ]}
+''';
+
+const _docCheap = '''
+{"version":1,"updated":"2026-11-07","entitlement":"all_apps",
+ "pass":{"name":"Ol1n Pass","lifetime_usd":49.99,"yearly_usd":14.99,
+  "landing_url":"https://olin.now/pass","catalog_url":"https://olin.now/pass.json",
+  "api_url":"https://pass.ol1n.com"},
+ "apps":[
+  {"slug":"kirian","name":"Kirian","unlock_value_usd":13.86,"pass_since":"2.6.0"},
+  {"slug":"lexify","name":"Lexify","unlock_value_usd":10.89,"pass_since":"1.4.0"}
  ]}
 ''';
 
@@ -63,6 +76,17 @@ Widget _app(Widget child, {Locale locale = const Locale('cs')}) => MaterialApp(
     );
 
 void main() {
+  setUp(() => _doc = _docWorth);
+
+  testWidgets('hides the value anchor while the apps are worth less than the Pass', (tester) async {
+    _doc = _docCheap;
+    final s = await _service(FakePassStore());
+    await tester.pumpWidget(_app(PassPaywall(service: s)));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('pass-card-lifetime')), findsOneWidget);
+    expect(find.byKey(const ValueKey('pass-value-anchor')), findsNothing);
+  });
+
   testWidgets('shows three cards, the value anchor and the app list', (tester) async {
     final store = FakePassStore();
     final s = await _service(store);
@@ -84,13 +108,13 @@ void main() {
     expect(find.byKey(const ValueKey('pass-card-app')), findsOneWidget);
     expect(find.byKey(const ValueKey('pass-card-lifetime')), findsOneWidget);
     expect(find.byKey(const ValueKey('pass-card-yearly')), findsOneWidget);
-    expect(find.text(r'$49.00'), findsOneWidget); // store price from the fake
+    expect(find.text(r'$49.99'), findsOneWidget); // store price from the fake
     expect(find.text(r'$14.99'), findsOneWidget);
 
-    // Value anchor: kirian 10 + lexify 20 (puff has no pass yet).
+    // Value anchor: kirian 10 + lexify 45 (puff has no pass yet) > 49.99.
     expect(find.byKey(const ValueKey('pass-value-anchor')), findsOneWidget);
-    expect(find.textContaining(r'$30'), findsOneWidget);
-    expect(find.textContaining(r'Ol1n Pass $49'), findsOneWidget);
+    expect(find.textContaining(r'$55'), findsOneWidget);
+    expect(find.textContaining(r'Ol1n Pass $49.99'), findsOneWidget);
 
     // App list: host app marked, coming-soon chip for puff, lexify tappable.
     expect(find.byKey(const ValueKey('pass-app-kirian')), findsOneWidget);

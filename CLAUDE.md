@@ -3,7 +3,7 @@
 <!-- Max 80 řádků. Co se nevejde, jde do docs/ a sem jeden odkaz. Veřejné repo: žádné LAN IP, domovské cesty, ID. -->
 
 ## Účel
-Ol1n Pass: jeden nákup (lifetime 49 USD, volitelně roční), který odemkne všechny jednorázové
+Ol1n Pass: jeden nákup (lifetime 49,99 USD, volitelně roční), který odemkne všechny jednorázové
 unlocky ve všech appkách Ol1n na App Storu i Google Play, včetně budoucích. Nákup jde vždy přes
 StoreKit / Play Billing; sdílení nároku mezi appkami dělá RevenueCat (entitlement `all_apps`)
 a malé Go API. Implementuje `Prompts/00-PASS_PLAN.md`; rozhraní a identifikátory jsou v
@@ -16,7 +16,7 @@ make build             # bin/pass-api, bin/passctl (CGO_ENABLED=0)
 make check-catalog     # passctl catalog check — schéma, unikátní slugy, součet hodnoty
 make sync-catalog      # catalog/apps.json → ol1n_pass/assets/ a internal/catalog/ (kopie, test to hlídá)
 make sync-site         # site/ + catalog → ../ol1n.now (pages/pass*.html, assets/css/pass.css, static/pass.json)
-make deploy-pass-api   # image → ghcr, `ssh joda` compose pull + up
+make deploy-pass-api   # `ssh joda`: git pull v ~/deploy/pass-api/src, compose up --build
 ```
 
 ## Mapa
@@ -26,7 +26,7 @@ ol1n_pass/             Flutter balíček: PassService, identita (keychain / Cont
 cmd/pass-api           Go server: link code, entitlements, RC webhook → Discord/Telegram, /pass/apps.json
 cmd/passctl            Go CLI: katalog, ASC + Play IAP plan/apply, RevenueCat kontrola
 internal/              sdílený Go kód (catalog, revenuecat, asc, play, linkcode, notify, …)
-deploy/                compose + Caddy snippet pro JODA
+deploy/                compose + vlastní cloudflared tunel pro JODA
 site/                  zdroj landing page olin.now/pass (cs + en) a jejího CSS
 docs/                  CONTRACTS, RUNBOOK (ruční kroky v konzolích), INTEGRATION, PROMO_ACCOUNTS, PROMO_WIRING
 Prompts/               původní plán

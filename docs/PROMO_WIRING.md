@@ -33,7 +33,7 @@ Pass je **promo projekt** jako každá appka: záznam `pass` v `PromoClown/proje
 token) ho agent vidí v `PROJECTS.md` a weekly plan s ním počítá.
 
 Hooks (co agent smí říkat):
-- One price, 49 USD, once. It unlocks every one-time unlock in every one of my apps.
+- One price, 49.99 USD, once. It unlocks every one-time unlock in every one of my apps.
 - Every new app I ship is in the Pass from its first version — the Pass grows, the price does not.
 - Works across iPhone, iPad and Android; buy once in any app.
 - Family Sharing on the App Store.
@@ -44,7 +44,7 @@ Forbidden claims (promo-api je odmítne s 422):
   pro store texty, a sliby na sítích se vrací v recenzích),
 - „free“, „trial“, „subscription“ u lifetime varianty (a „lifetime“ u roční),
 - „unlimited“, „everything“ bez „in my apps“ (Pass neodemyká consumables ani cizí appky),
-- srovnání s konkurencí a jakákoli čísla (prodeje, hodnota) kromě 49 USD a hodnoty, kterou ukazuje
+- srovnání s konkurencí a jakákoli čísla (prodeje, hodnota) kromě 49,99 USD a hodnoty, kterou ukazuje
   `pass.json` ten den,
 - „on Steam“, „on Windows“ — Pass je store IAP, desktop buildy jsou mimo.
 

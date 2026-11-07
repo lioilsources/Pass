@@ -82,7 +82,7 @@ void main() {
       expect(s.hasPass.value, isFalse);
       expect(s.catalog, isNotNull);
       expect(s.catalog!.totalUnlockValueUsd, 10); // bundled fallback: kirian only
-      expect(s.state.value.lifetimePrice, r'$49.00');
+      expect(s.state.value.lifetimePrice, r'$49.99');
       await s.dispose();
     });
 

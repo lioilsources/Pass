@@ -29,6 +29,7 @@ class PassAppUnlock {
 }
 
 /// Three cards (app unlock / Pass lifetime / Pass yearly), the value anchor
+/// (only once the unlocks are worth more than the Pass)
 /// from `apps.json`, the app list, Restore and link-code actions.
 ///
 /// Drop it in a sheet or a page. After a successful Pass purchase it swaps to
@@ -230,7 +231,7 @@ class _PassPaywallState extends State<PassPaywall> {
     final theme = Theme.of(context);
     final unlock = widget.appUnlock;
     final totalValue = catalog?.totalUnlockValueUsd ?? 0.0;
-    final lifetimeUsd = catalog?.pass.lifetimeUsd ?? 49.0;
+    final lifetimeUsd = catalog?.pass.lifetimeUsd ?? 49.99;
     final yearlyUsd = catalog?.pass.yearlyUsd;
     return [
       if (unlock != null)
@@ -265,7 +266,9 @@ class _PassPaywallState extends State<PassPaywall> {
           onPressed: _busy || !state.supported ? null : () => _buy(service.buyYearly, s),
         ),
       const SizedBox(height: 8),
-      if (catalog != null && totalValue > 0)
+      // The anchor only helps when the apps are worth more than the Pass;
+      // below that it would argue against buying it, so it stays hidden.
+      if (catalog != null && totalValue > lifetimeUsd)
         Text(
           '${s.valueToday}: ${PassStrings.usd(totalValue)} · ${s.passName} ${PassStrings.usd(lifetimeUsd)}',
           key: const ValueKey('pass-value-anchor'),

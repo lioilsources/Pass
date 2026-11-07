@@ -1,5 +1,5 @@
 # pass-api for JODA (linux/amd64). Pure Go, static binary on distroless.
-# Build from the repo root: docker build -f deploy/Dockerfile -t ghcr.io/lioilsources/pass-api:latest .
+# Built on JODA by deploy/docker-compose.yml from a clone of the repo (docs/RUNBOOK.md §4).
 FROM golang:1.26-alpine AS build
 ARG VERSION=dev
 WORKDIR /src

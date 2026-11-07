@@ -22,7 +22,7 @@ Zdroj pravdy pro identifikátory a rozhraní. Když se tu něco změní, mění 
 | App Store | `com.ol1n.pass.lifetime.<slug>` | `com.ol1n.pass.yearly.<slug>` v subscription group `ol1n_pass` |
 | Google Play | `pass_lifetime` (one-time, per package) | `pass_yearly`, base plan `yearly` (P1Y) |
 
-Display name všude „Ol1n Pass“ / „Ol1n Pass Yearly“. Ceny: lifetime **49 USD**, yearly **14.99 USD**
+Display name všude „Ol1n Pass“ / „Ol1n Pass Yearly“. Ceny: lifetime **49,99 USD**, yearly **14.99 USD**
 (Apple price point tier nejblíž, Play `otherRegionsConfig` USD + EUR). Family Sharing u lifetime zapnuté.
 
 Review note (stejná u všech IAP): *„Ol1n Pass is a non-consumable purchased via In-App Purchase;
@@ -42,7 +42,7 @@ jako fallback.
   "entitlement": "all_apps",
   "pass": {
     "name": "Ol1n Pass",
-    "lifetime_usd": 49.0, "yearly_usd": 14.99,
+    "lifetime_usd": 49.99, "yearly_usd": 14.99,
     "landing_url": "https://olin.now/pass",
     "catalog_url": "https://olin.now/pass.json",
     "api_url": "https://pass.ol1n.com",
