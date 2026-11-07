@@ -1,0 +1,14 @@
+# Cloudflare Tunnel "pass" for pass.ol1n.com (JODA). Copy to
+# ~/deploy/pass-api/cloudflared/config.yml and replace TUNNEL_ID with the id
+# printed by `cloudflared tunnel create pass`. credentials.json sits next to
+# this file on JODA and is never committed.
+tunnel: TUNNEL_ID
+credentials-file: /etc/cloudflared/credentials.json
+
+ingress:
+  # Public on purpose (no CF Access): the apps and the RevenueCat webhook call
+  # it directly. Only the API paths are proxied; everything else is a 404.
+  - hostname: pass.ol1n.com
+    path: ^/(healthz|pass/.*|v1/.*|webhooks/.*)$
+    service: http://pass-api:8096
+  - service: http_status:404

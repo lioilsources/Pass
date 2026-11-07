@@ -1,12 +1,22 @@
 # Standalone compose for JODA, deployed to ~/deploy/pass-api (see docs/RUNBOOK.md):
-#   ~/deploy/pass-api/docker-compose.yml   (this file)
-#   ~/deploy/pass-api/.env                 (chmod 600, from .env.example)
-#   ~/deploy/pass-api/data/pass.db         (SQLite, bind mount)
-# pass-api joins the external "web" network shared with Caddy; nothing is published on the host.
+#   ~/deploy/pass-api/docker-compose.yml        (this file, copied from the repo)
+#   ~/deploy/pass-api/src/                      (git clone of lioilsources/Pass, build context)
+#   ~/deploy/pass-api/.env                      (chmod 600, from .env.example; not in git)
+#   ~/deploy/pass-api/data/pass.db              (SQLite, bind mount, owned by uid 65532)
+#   ~/deploy/pass-api/cloudflared/config.yml    (from deploy/cloudflared.config.yml)
+#   ~/deploy/pass-api/cloudflared/credentials.json  (tunnel "pass"; not in git)
+#
+# Deploy:  cd ~/deploy/pass-api && git -C src pull && docker compose up -d --build
+#
+# pass.ol1n.com runs over its own Cloudflare Tunnel "pass" (cloudflared service
+# below), the same pattern as the other JODA services: no host port, no Caddy.
+# The API is public on purpose: the apps call it without CF Access.
 services:
   pass-api:
-    image: ghcr.io/lioilsources/pass-api:latest
-    # or: build: { context: ../../Pass, dockerfile: deploy/Dockerfile }
+    build:
+      context: ./src
+      dockerfile: deploy/Dockerfile
+    image: pass-api:latest
     container_name: pass-api
     restart: unless-stopped
     env_file: ./.env
@@ -21,11 +31,20 @@ services:
       timeout: 5s
       retries: 3
       start_period: 10s
-    networks: [web]
+    networks: [pass]
     mem_limit: 64m
     labels:
       ol1n.app: pass
 
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: pass-cloudflared
+    restart: unless-stopped
+    command: tunnel --config /etc/cloudflared/config.yml run
+    volumes:
+      - ./cloudflared:/etc/cloudflared:ro
+    networks: [pass]
+    depends_on: [pass-api]
+
 networks:
-  web:
-    external: true
+  pass:
