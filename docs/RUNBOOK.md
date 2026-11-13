@@ -33,7 +33,7 @@ Distribution. Sem patří jen názvy env proměnných:
      permissions mu dej *View financial data* + *Manage orders and subscriptions*; JSON nahraj do RC.
      Pub/Sub pro RTDN je volitelné (RC si vystačí s pollingem), ale zrychlí refundy.
 3. Z každé app položky si zkopíruj **public SDK key** (`appl_…` / `goog_…`). Ty jdou do appky přes
-   `--dart-define` (viz [INTEGRATION §3](INTEGRATION.md)), nikdy do repa.
+   `--dart-define` (viz [INTEGRATION §4](INTEGRATION.md#4-inicializace)), nikdy do repa.
 
 ### 1.2 Entitlement, produkty, offering
 1. **Entitlements** → `+ New` → identifier `all_apps`. Jediný entitlement v projektu.
@@ -54,7 +54,8 @@ Distribution. Sem patří jen názvy env proměnných:
    Environment: Production i Sandbox (sandbox je pro pilot), events: všechny.
 2. **API keys**: vytvoř **Secret API key v2** s právy *read* na projects/products/entitlements/offerings
    a *write* na products/entitlements (pro `passctl rc products apply`) a *read* na customers
-   (pro `pass-api` `/v1/entitlements` a `/v1/link-code`). Ulož do Bitwardenu `Pass / RC_SECRET_API_KEY`.
+   (pro `pass-api` `/v1/entitlements` a `/v1/link-code`). Ulož do Bitwardenu (položku určuje `Distribution/SKILL.md`)
+   a jako `RC_SECRET_API_KEY` do `.env`.
 3. Ověření: Webhooks → Send test event → v `docker logs pass-api` řádek s `event=TEST`.
 
 ---
