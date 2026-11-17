@@ -40,8 +40,7 @@ Prompts/               původní plán
   `internal/catalog/default_apps.json` jsou kopie z `make sync-catalog`; test selže, když se liší.
 - Product ID se odvozují ze `slug` (CONTRACTS §2). Nikdy je nepiš ručně do kódu ani do konzolí.
 - `passctl … apply` je idempotentní: čte, vytváří chybějící, nikdy nemaže a nemění ceny existujících.
-- V repu není žádný klíč, Team ID, service account ani webhook URL; všechno jde z env / Bitwardenu
-  (`Distribution/SKILL.md`). Repo je veřejné.
+- Klíče, service account a webhook URL jdou z env / Bitwardenu (`Distribution/SKILL.md`).
 - `pass-api` nikdy neodpoví „má Pass“ bez čerstvého ověření v RevenueCat (cache max 60 s).
 - Dětské appky (`kids: true`): žádný login bez rodičovské brány; balíček bránu nevnucuje, appka ji dodá.
 
